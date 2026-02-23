@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raydar | Client Testimonial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'PP Grafier';
+            src: local('PP Grafier'), local('PPGrafier-Regular');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0F0F0F;
+            --dark-grey: #222223;
+            --orange: #FF6E00;
+            --beige: #F6F3E9;
+            --beige-dark: #E8E4D8;
+            --violet: #7F72FF;
+            --violet-light: rgba(127, 114, 255, 0.1);
+            --white: #FFFFFF;
+            --text-body: #3A3A38;
+            --text-muted: #7A7770;
+            --text-subtle: #9A978F;
+            --border: #D8D4C8;
+            --input-bg: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--beige);
+            color: var(--black);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Subtle vertical line pattern — matching Figma testimonial card (light version) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 7px,
+                rgba(15, 15, 15, 0.035) 7px,
+                rgba(15, 15, 15, 0.035) 8px
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Top accent bar — orange to violet gradient */
+        .accent-bar {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--orange), var(--violet));
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+            padding: 56px 32px 72px;
+        }
+
+        /* Header with logo + email pill */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 56px;
+        }
+
+        .logo-wrap svg {
+            height: 28px;
+            width: auto;
+        }
+
+        .email-pill {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: -0.01em;
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 8px 18px;
+            text-decoration: none;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .email-pill:hover {
+            border-color: var(--violet);
+            color: var(--black);
+        }
+
+        /* Category tag */
+        .tag {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 16px;
+        }
+
+        /* Hero heading — PP Grafier style (fallback to DM Serif Display) */
+        .hero h1 {
+            font-family: 'PP Grafier', 'DM Serif Display', Georgia, serif;
+            font-size: 42px;
+            font-weight: 400;
+            line-height: 1.0;
+            letter-spacing: -0.03em;
+            color: var(--black);
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--text-muted);
+            max-width: 540px;
+            letter-spacing: -0.01em;
+        }
+
+        .hero {
+            margin-bottom: 48px;
+        }
+
+        /* Orange divider accent */
+        .divider {
+            width: 40px;
+            height: 3px;
+            background: var(--orange);
+            border-radius: 2px;
+            margin-bottom: 44px;
+        }
+
+        /* Info fields */
+        .fields-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 44px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 8px;
+        }
+
+        .field input {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            color: var(--black);
+            letter-spacing: -0.01em;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .field input:focus {
+            outline: none;
+            border-color: var(--violet);
+            box-shadow: 0 0 0 3px var(--violet-light);
+        }
+
+        .field input::placeholder {
+            color: var(--text-subtle);
+        }
+
+        /* Question sections */
+        .question-block {
+            margin-bottom: 40px;
+        }
+
+        .question-number {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--violet);
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-family: 'PP Grafier', 'DM Serif Display', Georgia, serif;
+            font-size: 22px;
+            font-weight: 400;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        .question-hint {
+            font-size: 14px;
+            color: var(--text-subtle);
+            margin-bottom: 14px;
+            line-height: 1.55;
+            letter-spacing: -0.01em;
+        }
+
+        .question-block textarea {
+            width: 100%;
+            min-height: 130px;
+            background: var(--input-bg);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            line-height: 1.65;
+            color: var(--black);
+            letter-spacing: -0.01em;
+            resize: vertical;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .question-block textarea:focus {
+            outline: none;
+            border-color: var(--violet);
+            box-shadow: 0 0 0 3px var(--violet-light);
+        }
+
+        .question-block textarea::placeholder {
+            color: var(--text-subtle);
+        }
+
+        /* Consent */
+        .consent-box {
+            background: var(--input-bg);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+
+        .consent-box p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            line-height: 1.6;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            border: 1.5px solid var(--border);
+            border-radius: 5px;
+            background: var(--beige);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            margin-top: 1px;
+        }
+
+        .checkbox-row input[type="checkbox"]:checked {
+            background: var(--violet);
+            border-color: var(--violet);
+        }
+
+        .checkbox-row input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid var(--white);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .checkbox-row span {
+            font-size: 14px;
+            color: var(--black);
+            line-height: 1.5;
+            letter-spacing: -0.01em;
+        }
+
+        /* Submit button — pill-shaped, Raydar dark */
+        .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--black);
+            color: var(--beige);
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            padding: 16px 40px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--dark-grey);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 28px rgba(15, 15, 15, 0.15);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn svg {
+            transition: transform 0.25s ease;
+        }
+
+        .submit-btn:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 56px;
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-left svg {
+            height: 18px;
+            width: auto;
+            opacity: 0.3;
+        }
+
+        .footer-left span {
+            font-size: 12px;
+            color: var(--text-subtle);
+        }
+
+        .footer a {
+            font-size: 12px;
+            color: var(--orange);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Success state */
+        .success-view {
+            display: none;
+            text-align: center;
+            padding: 80px 24px;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 28px;
+        }
+
+        .success-view h2 {
+            font-family: 'PP Grafier', 'DM Serif Display', Georgia, serif;
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--black);
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .success-view p {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+
+        .success-view a {
+            display: inline-block;
+            margin-top: 28px;
+            color: var(--orange);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .success-view a:hover {
+            text-decoration: underline;
+        }
+
+        /* Validation error state */
+        .field-error input,
+        .field-error textarea {
+            border-color: var(--orange) !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .container {
+                padding: 40px 20px 56px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .fields-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .question-text {
+                font-size: 19px;
+            }
+
+            .submit-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            body::before {
+                width: 100px;
+            }
+        }
+    </style>
+</head><body>
+    <div class="page-wrapper">
+        <div class="accent-bar"></div>
+
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <div class="logo-wrap">
+                    <svg width="142" height="36" viewBox="0 0 142 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M60.2548 26.0939L56.0046 19.2366H51.8026V26.0939H48.3492V6H56.077C60.8586 6 63.8048 8.43707 63.8048 12.5705C63.8048 15.5332 62.3075 17.6836 59.6752 18.6632L64.336 26.0939H60.2548ZM51.8026 9.10607V16.1306H55.6665C58.83 16.1306 60.3756 14.9598 60.3756 12.5944C60.3756 10.229 58.8059 9.10607 55.6665 9.10607H51.8026Z" fill="#0F0F0F"/>
+                        <path d="M77.425 13.3112V12.0449H80.661V26.0939H77.3525V25.0665C76.2175 25.9506 74.8893 26.4045 73.392 26.4045C71.3635 26.4045 69.7214 25.7116 68.4173 24.3497C67.1132 22.9401 66.4854 21.1959 66.4854 19.0694C66.4854 16.943 67.1132 15.1988 68.4173 13.7891C69.7214 12.3794 71.3635 11.6865 73.392 11.6865C75.0342 11.6865 76.3865 12.2361 77.425 13.2873V13.3112ZM73.6094 14.697C71.1703 14.697 69.8421 16.5607 69.8421 19.0694C69.8421 21.5782 71.1703 23.6091 73.6094 23.6091C76.0485 23.6091 77.425 21.6021 77.425 19.0694C77.425 16.5368 76.0243 14.697 73.6094 14.697Z" fill="#0F0F0F"/>
+                        <path d="M89.7894 31.6371H86.3119L88.5095 26.2612L82.8827 12.0449H86.65L90.369 22.1994L94.1362 12.0449H97.7345L89.7894 31.6371Z" fill="#0F0F0F"/>
+                        <path d="M109.592 13.0723V6H112.9V26.0939H109.664V24.8276C108.65 25.8789 107.298 26.4045 105.631 26.4045C103.603 26.4045 101.961 25.7116 100.657 24.3497C99.3525 22.94 98.7246 21.1959 98.7246 19.0694C98.7246 16.9429 99.3525 15.1987 100.657 13.7891C101.961 12.3794 103.603 11.6865 105.631 11.6865C107.201 11.6865 108.529 12.1405 109.592 13.0723ZM102.057 19.0694C102.057 21.602 103.458 23.5374 105.849 23.5374C108.239 23.5374 109.64 21.5781 109.64 19.0694C109.64 16.5606 108.288 14.6014 105.849 14.6014C103.41 14.6014 102.057 16.5606 102.057 19.0694Z" fill="#0F0F0F"/>
+                        <path d="M127.124 13.3112V12.0449H130.36V26.0939H127.052V25.0665C125.917 25.9506 124.588 26.4045 123.091 26.4045C121.063 26.4045 119.421 25.7116 118.116 24.3497C116.812 22.9401 116.185 21.1959 116.185 19.0694C116.185 16.943 116.812 15.1988 118.116 13.7891C119.421 12.3794 121.063 11.6865 123.091 11.6865C124.733 11.6865 126.086 12.2361 127.124 13.2873V13.3112ZM123.309 14.697C120.869 14.697 119.541 16.5607 119.541 19.0694C119.541 21.5782 120.869 23.6091 123.309 23.6091C125.748 23.6091 127.124 21.6021 127.124 19.0694C127.124 16.5368 125.723 14.697 123.309 14.697Z" fill="#0F0F0F"/>
+                        <path d="M137.436 15.151V26.0939H134.127V12.0449H142V15.151H137.412H137.436Z" fill="#0F0F0F"/>
+                        <path d="M31.2086 7.48209C30.7522 7.93365 30.6381 8.75211 31.009 9.28834C35.1166 15.2433 34.3179 23.5408 28.6128 28.5927C22.9077 33.6446 14.6067 33.5034 9.04425 28.7056C2.48337 23.061 2.22664 13.1831 8.27406 7.19986C12.3817 3.13578 18.3151 1.95043 23.4782 3.64379C24.5336 3.98247 24.8189 5.30894 24.0487 6.09917L23.9061 6.24029C23.5067 6.6354 22.9077 6.77652 22.3657 6.60718C18.0013 5.22427 12.9808 6.43784 9.78592 10.2197C6.16317 14.5095 6.24875 20.8879 9.92855 25.1213C14.4071 30.2296 22.2516 30.4272 27.0154 25.7422C30.6952 22.1015 31.4083 16.5698 29.0977 12.2235C28.6413 11.3486 27.4718 11.2075 26.7586 11.8848C26.3022 12.3364 26.1881 13.0137 26.5019 13.5782C28.3561 17.106 27.6144 21.6217 24.2484 24.3311C20.8824 27.0404 16.1471 26.8429 13.0093 24.1053C9.18688 20.775 9.07278 14.9893 12.61 11.4897C13.8936 10.2197 15.491 9.42945 17.1455 9.119C18.6003 8.865 19.5131 10.6148 18.4577 11.6308C18.258 11.8284 18.0013 11.9695 17.716 12.0259C16.4039 12.2517 15.1773 12.9573 14.2644 14.0862C12.61 16.1182 12.6385 19.0816 14.2644 21.1419C16.4324 23.823 20.426 23.9924 22.7936 21.6217C23.9061 20.521 24.4766 19.0534 24.4766 17.614C24.4766 16.344 22.8792 15.7231 21.9663 16.6263C21.7096 16.8803 21.5385 17.2189 21.5385 17.5858C21.5385 18.4607 21.1391 19.3356 20.3119 19.9001C19.399 20.521 18.1154 20.5492 17.2026 19.9001C15.6907 18.8841 15.5481 16.8238 16.7747 15.6102C17.2596 15.1304 17.8587 14.8764 18.4862 14.82C19.1138 14.7636 19.7128 14.4249 20.1692 13.9733L28.9836 5.25249C29.6397 4.60337 29.5256 3.5309 28.784 3.02289C21.4814 -1.88786 11.2407 -0.815398 5.16477 6.24029C-0.426241 12.788 -0.397716 22.5248 5.25035 29.0443C12.068 36.8902 24.0772 37.2006 31.3227 30.0321C37.4557 23.9642 38.1689 14.5378 33.4336 7.67965C32.9202 6.94585 31.8362 6.83296 31.1801 7.48209H31.2086Z" fill="#FF6E00"/>
+                    </svg>
+                </div>
+                <a href="mailto:hello@raydar.com" class="email-pill">hello@raydar.com</a>
+            </div>
+
+            <!-- Form -->
+            <div id="formContent">
+                <!-- Hero -->
+                <div class="hero">
+                    <p class="tag">For Our Partners</p>
+                    <h1>Tell Us About<br>Working Together</h1>
+                    <p>Your perspective helps us improve and helps future clients understand the value of partnering with Raydar. We'd love to hear about your experience — the good, the great, and how we can keep getting better.</p>
+                </div>
+
+                <div class="divider"></div>
+
+                <form action="https://formsubmit.co/hello@raydar.com" method="POST" id="testimonialForm">
+                    <input type="hidden" name="_subject" value="New Client Testimonial Submission">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <!-- Info fields -->
+                    <div class="fields-grid">
+                        <div class="field">
+                            <label>Full Name *</label>
+                            <input type="text" id="name" name="name" placeholder="Sam Treadborne" required>
+                        </div>
+                        <div class="field">
+                            <label>Title / Role</label>
+                            <input type="text" id="title" name="title" placeholder="e.g. Head of People">
+                        </div>
+                    </div>
+                    <div class="fields-grid">
+                        <div class="field">
+                            <label>Company *</label>
+                            <input type="text" id="company" name="company" placeholder="e.g. Bankless" required>
+                        </div>
+                        <div class="field">
+                            <label>Company Website</label>
+                            <input type="url" id="website" name="website" placeholder="https://...">
+                        </div>
+                    </div>
+
+                    <!-- Question 1 -->
+                    <div class="question-block">
+                        <p class="question-number">Question 01</p>
+                        <p class="question-text">What challenges were you facing with hiring before partnering with Raydar?</p>
+                        <p class="question-hint">Think about what the talent search looked like, what wasn't working, or what gaps you were trying to fill.</p>
+                        <textarea id="q1" name="q1" placeholder="Describe your hiring landscape before working with Raydar..." required></textarea>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question-block">
+                        <p class="question-number">Question 02</p>
+                        <p class="question-text">What has Raydar delivered for your team in terms of results?</p>
+                        <p class="question-hint">Consider quality of candidates, speed of hire, understanding of your needs, or anything that stood out about the partnership.</p>
+                        <textarea id="q2" name="q2" placeholder="Share the results and impact of working with Raydar..." required></textarea>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question-block">
+                        <p class="question-number">Question 03</p>
+                        <p class="question-text">What would you tell another founder or hiring leader considering Raydar?</p>
+                        <p class="question-hint">A sentence or two of honest advice that could help someone evaluating recruiting partners.</p>
+                        <textarea id="q3" name="q3" placeholder="What would you tell a peer about working with Raydar..." required></textarea>
+                    </div>
+
+                    <!-- Consent -->
+                    <div class="consent-box">
+                        <p>Your testimonial may be featured on our website, pitch materials, and social media to help others understand the value of partnering with Raydar.</p>
+                        <label class="checkbox-row">
+                            <input type="checkbox" id="consent" name="consent" required>
+                            <span>I give permission for Raydar to use my name, title, company, and testimonial in marketing materials.</span>
+                        </label>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="submit-btn">
+                        Submit Testimonial
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </form>
+
+                <!-- Footer -->
+                <div class="footer">
+                    <div class="footer-left">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M31.2086 7.48209C30.7522 7.93365 30.6381 8.75211 31.009 9.28834C35.1166 15.2433 34.3179 23.5408 28.6128 28.5927C22.9077 33.6446 14.6067 33.5034 9.04425 28.7056C2.48337 23.061 2.22664 13.1831 8.27406 7.19986C12.3817 3.13578 18.3151 1.95043 23.4782 3.64379C24.5336 3.98247 24.8189 5.30894 24.0487 6.09917L23.9061 6.24029C23.5067 6.6354 22.9077 6.77652 22.3657 6.60718C18.0013 5.22427 12.9808 6.43784 9.78592 10.2197C6.16317 14.5095 6.24875 20.8879 9.92855 25.1213C14.4071 30.2296 22.2516 30.4272 27.0154 25.7422C30.6952 22.1015 31.4083 16.5698 29.0977 12.2235C28.6413 11.3486 27.4718 11.2075 26.7586 11.8848C26.3022 12.3364 26.1881 13.0137 26.5019 13.5782C28.3561 17.106 27.6144 21.6217 24.2484 24.3311C20.8824 27.0404 16.1471 26.8429 13.0093 24.1053C9.18688 20.775 9.07278 14.9893 12.61 11.4897C13.8936 10.2197 15.491 9.42945 17.1455 9.119C18.6003 8.865 19.5131 10.6148 18.4577 11.6308C18.258 11.8284 18.0013 11.9695 17.716 12.0259C16.4039 12.2517 15.1773 12.9573 14.2644 14.0862C12.61 16.1182 12.6385 19.0816 14.2644 21.1419C16.4324 23.823 20.426 23.9924 22.7936 21.6217C23.9061 20.521 24.4766 19.0534 24.4766 17.614C24.4766 16.344 22.8792 15.7231 21.9663 16.6263C21.7096 16.8803 21.5385 17.2189 21.5385 17.5858C21.5385 18.4607 21.1391 19.3356 20.3119 19.9001C19.399 20.521 18.1154 20.5492 17.2026 19.9001C15.6907 18.8841 15.5481 16.8238 16.7747 15.6102C17.2596 15.1304 17.8587 14.8764 18.4862 14.82C19.1138 14.7636 19.7128 14.4249 20.1692 13.9733L28.9836 5.25249C29.6397 4.60337 29.5256 3.5309 28.784 3.02289C21.4814 -1.88786 11.2407 -0.815398 5.16477 6.24029C-0.426241 12.788 -0.397716 22.5248 5.25035 29.0443C12.068 36.8902 24.0772 37.2006 31.3227 30.0321C37.4557 23.9642 38.1689 14.5378 33.4336 7.67965C32.9202 6.94585 31.8362 6.83296 31.1801 7.48209H31.2086Z" fill="#0F0F0F"/>
+                        </svg>
+                        <span>&copy; Raydar 2026</span>
+                    </div>
+                    <a href="https://raydar.xyz" target="_blank">raydar.xyz</a>
+                </div>
+            </div>
+
+            <!-- Success State -->
+            <div class="success-view" id="successView">
+                <div class="success-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <h2>Thank You</h2>
+                <p>Your testimonial has been submitted. We truly appreciate your partnership and the time you've taken to share your experience with Raydar.</p>
+                <a href="https://raydar.xyz" target="_blank">Visit raydar.xyz &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('testimonialForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            const name = document.getElementById('name');
+            const company = document.getElementById('company');
+            const q1 = document.getElementById('q1');
+            const q2 = document.getElementById('q2');
+            const q3 = document.getElementById('q3');
+            const consent = document.getElementById('consent');
+            let valid = true;
+
+            // Clear previous errors
+            document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+
+            if (!name.value.trim()) {
+                name.parentElement.classList.add('field-error');
+                valid = false;
+            }
+
+            if (!company.value.trim()) {
+                company.parentElement.classList.add('field-error');
+                valid = false;
+            }
+
+            [q1, q2, q3].forEach(ta => {
+                if (ta.value.trim().length < 10) {
+                    ta.parentElement.classList.add('field-error');
+                    valid = false;
+                }
+            });
+
+            if (!consent.checked) {
+                consent.parentElement.style.color = '#FF6E00';
+                valid = false;
+                setTimeout(() => { consent.parentElement.style.color = ''; }, 2000);
+            }
+
+            if (!valid) return;
+
+            // Submit via Formsubmit.co
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                headers: { 'Accept': 'application/json' },
+                body: formData
+            }).then(res => {
+                if (res.ok) {
+                    document.getElementById('formContent').style.display = 'none';
+                    document.getElementById('successView').style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    throw new Error('Submission failed');
+                }
+            }).catch(err => {
+                alert('Something went wrong. Please try again.');
+                console.error(err);
+            });
+        });
+    </script>
+</body>
+</html>
