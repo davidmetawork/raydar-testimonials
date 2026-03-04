@@ -519,7 +519,7 @@
 
                 <div class="divider"></div>
 
-                <form action="https://formsubmit.co/david@raydar.xyz" method="POST" id="testimonialForm">
+                <form action="https://script.google.com/macros/s/AKfycbw440K_6codVUn0Haz0oG-rmiUn2mtHMFaSnuDU2wO-jHuDLEZ3eRD6E6-YbMbD_CEu/exec" method="POST" id="testimonialForm">
                     <input type="hidden" name="_subject" value="New Candidate Testimonial Submission">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="table">
@@ -643,12 +643,12 @@
 
             if (!valid) return;
 
-            // Submit via Formsubmit.co
+            // Submit via Google Apps Script
             const formData = new FormData(form);
             fetch(form.action, {
                 method: 'POST',
-                headers: { 'Accept': 'application/json' },
-                body: formData
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(Object.fromEntries(formData))
             }).then(res => {
                 if (res.ok) {
                     document.getElementById('formContent').style.display = 'none';
