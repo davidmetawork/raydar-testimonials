@@ -258,68 +258,6 @@
             color: var(--text-subtle);
         }
 
-        /* Consent */
-        .consent-box {
-            background: var(--input-bg);
-            border: 1.5px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 40px;
-        }
-
-        .consent-box p {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 14px;
-            line-height: 1.6;
-        }
-
-        .checkbox-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            cursor: pointer;
-        }
-
-        .checkbox-row input[type="checkbox"] {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            min-width: 20px;
-            border: 1.5px solid var(--border);
-            border-radius: 5px;
-            background: var(--beige);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            margin-top: 1px;
-        }
-
-        .checkbox-row input[type="checkbox"]:checked {
-            background: var(--violet);
-            border-color: var(--violet);
-        }
-
-        .checkbox-row input[type="checkbox"]:checked::after {
-            content: '';
-            position: absolute;
-            left: 6px;
-            top: 2px;
-            width: 5px;
-            height: 10px;
-            border: solid var(--white);
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-        }
-
-        .checkbox-row span {
-            font-size: 14px;
-            color: var(--black);
-            line-height: 1.5;
-            letter-spacing: -0.01em;
-        }
-
         /* Submit button — pill-shaped, Raydar dark */
         .submit-btn {
             display: inline-flex;
@@ -570,14 +508,6 @@
                         <textarea id="q3" name="q3" placeholder="What would you tell a peer about working with Raydar..." required></textarea>
                     </div>
 
-                    <!-- Consent -->
-                    <div class="consent-box">
-                        <p>Your testimonial may be featured on our website, pitch materials, and social media to help others understand the value of partnering with Raydar.</p>
-                        <label class="checkbox-row">
-                            <input type="checkbox" id="consent" name="consent" required>
-                            <span>I give permission for Raydar to use my name, title, company, and testimonial in marketing materials.</span>
-                        </label>
-                    </div>
 
                     <!-- Submit -->
                     <button type="submit" class="submit-btn">
@@ -618,8 +548,6 @@
             const company = document.getElementById('company');
             const q1 = document.getElementById('q1');
             const q2 = document.getElementById('q2');
-            const q3 = document.getElementById('q3');
-            const consent = document.getElementById('consent');
             let valid = true;
 
             // Clear previous errors
@@ -642,11 +570,6 @@
                 }
             });
 
-            if (!consent.checked) {
-                consent.parentElement.style.color = '#FF6E00';
-                valid = false;
-                setTimeout(() => { consent.parentElement.style.color = ''; }, 2000);
-            }
 
             if (!valid) return;
 
